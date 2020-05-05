@@ -1,5 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.1] - 2020-05-05
+### Fixed
+- Fixed character level conversion as described in Issue #2
+
 ## [0.1.0] - 2020-05-04
 Initial Release
