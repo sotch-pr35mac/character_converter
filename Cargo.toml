@@ -1,0 +1,10 @@
+[package]
+name = "character_converter"
+version = "0.1.0"
+authors = ["Preston Wang-Stosur-Bassett <p.wanstobas@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bincode = "1.2.1"
