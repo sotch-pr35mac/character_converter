@@ -13,8 +13,8 @@ use character_converter::CharacterConverter;
 
 let converter: CharacterConverter = CharacterConverter::new();
 
-let traditional_text = String::from("");
-let simplified_text = String::from("");
+let traditional_text = String::from("復雜");
+let simplified_text = String::from("复杂");
 
 // Check Script
 let result_one: bool = converter.is_traditional(traditional_text);
