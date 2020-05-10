@@ -3,10 +3,18 @@ name: Build & Test
 on: [ push, pull_request ]
 
 jobs:
-  build:
-
+  validate-commit-message:
+    name: Check Commit Message
     runs-on: ubuntu-latest
-
+    steps:
+      - name: Check Commit Format
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '\[(?:(?:(?:depcrecat|remov|fix)ed|security|changed)\] |added\])'
+          flags: 'gm'
+          error: 'Your commit message does not meet the commit message criteria. Prefix commit messages with one of the following: [deprecated][removed][fixed][added][security][changed].'
+  test:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Build
