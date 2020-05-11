@@ -28,6 +28,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: 'master'
+          ref: 'pw/test'
+          fetch-depth: 0
+      - name: Get All Commits
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Bump Cargo Version Number
         uses: sotch-pr35mac/bump-version-number-action@master
