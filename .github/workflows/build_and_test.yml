@@ -21,3 +21,10 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
+
+  bump_version:
+    name: Bump Cargo Version Number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bump Cargo Version Number
+        uses: sotch-pr35mac/bump-version-number-action@master
