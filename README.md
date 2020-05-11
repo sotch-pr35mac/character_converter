@@ -2,6 +2,8 @@
 ##### v0.1.1
 ---
 
+# DO NOT MERGE THIS
+
 ### About
 Turn Traditional Chinese script to Simplified Chinese script and vice-versa. Check string script to determine if string is Traditional or Simplified Chinese Characters.
 
