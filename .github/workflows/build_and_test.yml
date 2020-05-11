@@ -27,5 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: 'master'
       - name: Bump Cargo Version Number
         uses: sotch-pr35mac/bump-version-number-action@master
