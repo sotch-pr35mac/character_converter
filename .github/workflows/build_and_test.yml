@@ -34,3 +34,5 @@ jobs:
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Bump Cargo Version Number
         uses: sotch-pr35mac/bump-version-number-action@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
