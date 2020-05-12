@@ -42,7 +42,7 @@ jobs:
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v4.2.0
         with:
-          commit_message: [auto] Apply version bump changes
+          commit_message: '[auto] Apply version bump'
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
