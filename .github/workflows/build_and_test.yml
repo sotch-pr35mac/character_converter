@@ -14,6 +14,7 @@ jobs:
           flags: 'gm'
           error: 'Your commit message does not meet the commit message criteria. Prefix commit messages with one of the following: [deprecated][removed][fixed][added][security][changed].'
   test:
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -23,8 +24,11 @@ jobs:
       run: cargo test --verbose
 
   bump_version:
-    name: Bump Cargo Version Number
+    name: Bump Version
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.bumpVersion.outputs.versionNumber }}
+      changes: ${{ steps.bumpVersion.outputs.changeLog }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -33,8 +37,16 @@ jobs:
       - name: Get All Commits
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Bump Cargo Version Number
+        id: bumpVersion
         uses: sotch-pr35mac/bump@master
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v4.2.0
         with:
-          commit_message: Test commit message
+          commit_message: [auto] Apply version bump changes
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ needs.bump_version.outputs.version }}
+          body: ${{ needs.bump_version.outputs.changes }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: 'true'
