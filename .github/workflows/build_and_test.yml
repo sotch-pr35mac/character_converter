@@ -33,6 +33,8 @@ jobs:
       - name: Get All Commits
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: Bump Cargo Version Number
-        uses: sotch-pr35mac/bump-version-number-action@master
+        uses: sotch-pr35mac/bump@master
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v4.2.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Test commit message
