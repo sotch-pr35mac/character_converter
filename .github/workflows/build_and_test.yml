@@ -46,7 +46,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ needs.bump_version.outputs.version }}
-          body: ${{ needs.bump_version.outputs.changes }}
+          tag: ${{ steps.bumpVersion.outputs.versionNumber }}
+          body: ${{ steps.bumpVersion.outputs.changeLog }}
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: 'true'
