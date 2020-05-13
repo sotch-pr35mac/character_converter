@@ -55,4 +55,3 @@ jobs:
           tag: ${{ needs.bump_version.outputs.version }}
           body: ${{ needs.bump_version.outputs.changes }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          draft: 'true'
