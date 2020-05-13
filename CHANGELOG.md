@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.6] - 2020-05-13
+### Changed
+- Updated the release ref to master
+
 ## [0.1.5] - 2020-05-13
 ### Changed
 - Merged release and publish workflows
