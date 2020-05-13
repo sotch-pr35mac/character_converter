@@ -55,3 +55,25 @@ jobs:
           tag: ${{ needs.bump_version.outputs.version }}
           body: ${{ needs.bump_version.outputs.changes }}
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  package_crate:
+    name: Package crate
+    runs-on: ubuntu-latest
+    needs: create_release
+    steps:
+        - uses: actions/checkout@v2
+        - name: Login
+          run: cargo login ${{ secrets.CARGO_TOKEN }}
+        - name: Package
+          run: cargo package
+
+  publish:
+    name: Publish to crates.io
+    runs-on: ubuntu-latest
+    needs: package_crate
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login
+        run: cargo login ${{ secrets.CARGO_TOKEN }}
+      - name: Publish
+        run: cargo publish
