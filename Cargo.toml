@@ -1,6 +1,6 @@
 [package]
 name = "character_converter"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Preston Wang-Stosur-Bassett <p.wanstobas@gmail.com>"]
 description = "Turn Traditional Chinese script ot Simplified Chinese script and vice-versa."
 repository = "https://github.com/sotch-pr35mac/character_converter"

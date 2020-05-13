@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.3] - 2020-05-13
+### Changed
+- Updated syntax for publish workflow
+
 ## [0.1.2] - 2020-05-13
 ### Changed
 - Changed the release workflow to publish releases
