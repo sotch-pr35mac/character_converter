@@ -1,0 +1,43 @@
+name: Create Release
+
+on: [ push, pull_request ]
+
+jobs:
+  bump_version:
+    name: Bump Version
+    id: bump_version_job
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.bump_version.outputs.versionNumber }}
+      changes: ${{ steps.bump_version.outputs.changeLog }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'pw/test'
+          fetch-depth: 0
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - name: Bump Version Number
+        id: bump_version
+        uses: sotch-pr35mac/bump@master
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v4.2.0
+        with:
+          commit_message: '[auto] Apply version bump'
+
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: bump_version_job
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'pw/test'
+          fetch-depth: 0
+        run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ needs.bump_version_job.outputs.version }}
+          body: ${{ needs.bump_version_job.outputs.changes }}
+          draft: 'true'
+    
