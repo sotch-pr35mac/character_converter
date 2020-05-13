@@ -1,6 +1,50 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.13.0] - 2020-05-13
+### Added
+- added new workflow
+- added support for commiting change
+- added github token to workflow
+- Automatic Versioning
+- Added commit checker to workflow
+
+### Changed
+- updated credentials
+- updated the workflow file with proper references
+- updated workflow
+- another change to the readme
+- updated workflow
+- Renamed the Build and Test Workflow
+
+### Fixed
+- fixed another issue in the workflow
+- fixed workflow issue
+- fixed an issue with the workflow file
+- Added Checkout Action to the New Workflow
+
+## [0.12.0] - 2020-05-13
+### Added
+- added new workflow
+- added support for commiting change
+- added github token to workflow
+- Automatic Versioning
+- Added commit checker to workflow
+
+### Changed
+- updated credentials
+- updated the workflow file with proper references
+- updated workflow
+- another change to the readme
+- updated workflow
+- Renamed the Build and Test Workflow
+
+### Fixed
+- fixed another issue in the workflow
+- fixed workflow issue
+- fixed an issue with the workflow file
+- Added Checkout Action to the New Workflow
+
 ## [0.11.0] - 2020-05-13
 ### Added
 - added new workflow
