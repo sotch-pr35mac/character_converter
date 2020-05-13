@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.5] - 2020-05-13
+### Changed
+- Merged release and publish workflows
+
+### Fixed
+- Changed the regex requirement for commit messages so auto commits don't fail pipelines
+
 ## [0.1.4] - 2020-05-13
 ### Fixed
 - Changed the regex requirement for commit messages so auto commits don't fail pipelines
