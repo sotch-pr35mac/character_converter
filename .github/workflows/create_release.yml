@@ -62,6 +62,8 @@ jobs:
     needs: create_release
     steps:
         - uses: actions/checkout@v2
+          with:
+            ref: 'master'
         - name: Login
           run: cargo login ${{ secrets.CARGO_TOKEN }}
         - name: Package
@@ -73,6 +75,8 @@ jobs:
     needs: package_crate
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: 'master'
       - name: Login
         run: cargo login ${{ secrets.CARGO_TOKEN }}
       - name: Publish
