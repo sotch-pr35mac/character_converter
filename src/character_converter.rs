@@ -1,8 +1,6 @@
-/*
- * @author		:: Preston Wang-Stosur-Bassett
- * @date		:: January 26, 2020
- * @description		:: This package converters traditional chinese characters to simplified chinese characters and vice versa
- */
+// @author		:: Preston Wang-Stosur-Bassett <p.wanstobas@gmail.com>
+// @date		:: January 26, 2020
+// @description		:: This package converters traditional chinese characters to simplified chinese characters and vice versa
 
 use bincode::deserialize_from;
 use std::collections::HashMap;
@@ -17,7 +15,7 @@ pub struct Converter {
 
 impl Converter {
 	pub fn new() -> Converter {
-		return Converter {
+		Converter {
 			traditional2simplified_map: deserialize_from(T2S).unwrap(),
 			simplified2traditional_map: deserialize_from(S2T).unwrap()
 		}
@@ -35,12 +33,12 @@ impl Converter {
 		return true;
 	}
 
-	pub fn is_traditional(&self, raw: String) -> bool {
-		return Converter::is_script(&raw, &self.traditional2simplified_map, &self.simplified2traditional_map);
+	pub fn is_traditional(&self, raw: &str) -> bool {
+		Converter::is_script(raw, &self.traditional2simplified_map, &self.simplified2traditional_map)
 	}
 
-	pub fn is_simplified(&self, raw: String) -> bool {
-		return Converter::is_script(&raw, &self.simplified2traditional_map, &self.traditional2simplified_map);
+	pub fn is_simplified(&self, raw: &str) -> bool {
+		Converter::is_script(raw, &self.simplified2traditional_map, &self.traditional2simplified_map)
 	}
 
 	fn convert_script(raw: &str, mapping: &HashMap<String, String>) -> String {
@@ -70,11 +68,11 @@ impl Converter {
 		return converted_characters.join("");
 	}
 
-	pub fn traditional_to_simplified(&self, raw: String) -> String {
-		return Converter::convert_script(&raw, &self.traditional2simplified_map);
+	pub fn traditional_to_simplified(&self, raw: &str) -> String {
+		Converter::convert_script(raw, &self.traditional2simplified_map)
 	}
 
-	pub fn simplified_to_traditional(&self, raw: String) -> String {
-		return Converter::convert_script(&raw, &self.simplified2traditional_map);
+	pub fn simplified_to_traditional(&self, raw: &str) -> String {
+		Converter::convert_script(raw, &self.simplified2traditional_map)
 	}
 }
