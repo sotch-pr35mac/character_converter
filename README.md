@@ -1,5 +1,5 @@
 # character_converter
-##### v0.1.6
+##### v1.0.0
 ---
 
 ### About
@@ -13,8 +13,8 @@ use character_converter::CharacterConverter;
 
 let converter: CharacterConverter = CharacterConverter::new();
 
-let traditional_text = String::from("復雜");
-let simplified_text = String::from("复杂");
+let traditional_text = "復雜";
+let simplified_text = "复杂";
 
 // Check Script
 let result_one: bool = converter.is_traditional(traditional_text);
@@ -30,9 +30,6 @@ println!("{}", result_three == simplified_text); // --> true
 let result_four: String = converter.simplified_to_traditional(simplified_text);
 println!("{}", result_four == traditional_text); // --> true
 ```
-
-### Contributors
-- [Preston Wang-Stosur-Bassett](http://stosur.info)
 
 ### License
 [MIT](https://github.com/sotch-pr35mac/character_converter/blob/master/LICENSE)
