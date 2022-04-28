@@ -42,12 +42,14 @@ static T2S: Lazy<HashMap<String, String>> =
 static S2T: Lazy<HashMap<String, String>> =
     Lazy::new(|| deserialize_from(&include_bytes!("../data/s2t.profile")[..]).unwrap());
 
+// create an fst containing all the keys
 static T2S_FST: Lazy<Fst<Vec<u8>>> = Lazy::new(|| {
     let mut keys: Vec<_> = T2S.keys().collect();
     keys.sort_unstable();
     Fst::from_iter_set(keys).unwrap()
 });
 
+// create an fst containing all the keys
 static S2T_FST: Lazy<Fst<Vec<u8>>> = Lazy::new(|| {
     let mut keys: Vec<_> = S2T.keys().collect();
     keys.sort_unstable();
@@ -88,7 +90,6 @@ fn convert_script(raw: &str, mapping: &HashMap<String, String>, fst: &Fst<Vec<u8
         match find_longest_prefix(fst, tailstr.as_bytes()) {
             Some((_, length)) => {
                 let tailstr = &tailstr[..length];
-                // TODO remove unwrap
                 let mapped = mapping.get(tailstr).unwrap();
                 converted_characters.push_str(mapped);
                 skip_bytes += tailstr.len();
