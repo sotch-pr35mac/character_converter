@@ -55,30 +55,33 @@ impl Converter {
     }
 
     fn convert_script(raw: &str, mapping: &HashMap<String, String>) -> String {
-        let mut converted_characters: Vec<String> = Vec::new();
-        let default_take = if raw.chars().count() < 20 { raw.chars().count() } else { 20 };
+        let mut converted_characters: String = String::new();
+        let default_take = raw.chars().take(20).count();
         let mut skip = 0;
         let mut take = default_take;
 
         while skip < raw.chars().count() {
             let substring: String = raw.chars().skip(skip).take(take).collect();
-            let mapped_char = mapping.get(&substring.to_string());
-            if mapped_char.is_some() {
-                converted_characters.push(mapped_char.unwrap().to_string());
-                skip += take;
-                take = default_take;
-            } else {
-                if take > 1 {
-                    take -= 1;
-                } else {
-                    converted_characters.push(substring);
-                    skip += 1;
+            let mapped_char = mapping.get(&substring);
+            match mapped_char {
+                Some(mapped_char) => {
+                    converted_characters.push_str(mapped_char);
+                    skip += take;
                     take = default_take;
+                }
+                None => {
+                    if take > 1 {
+                        take -= 1;
+                    } else {
+                        converted_characters.push_str(&substring);
+                        skip += 1;
+                        take = default_take;
+                    }
                 }
             }
         }
 
-        return converted_characters.join("");
+        converted_characters
     }
 
     pub fn traditional_to_simplified(&self, raw: &str) -> String {
