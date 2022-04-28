@@ -14,3 +14,6 @@ edition = "2018"
 
 [dependencies]
 bincode = "1.2.1"
+
+[features]
+bench = []

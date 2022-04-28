@@ -31,5 +31,11 @@ let result_four: String = converter.simplified_to_traditional(simplified_text);
 println!("{}", result_four == traditional_text); // --> true
 ```
 
+### Benchmarks
+
+```
+cargo +nightly bench --features=bench
+```
+
 ### License
 [MIT](https://github.com/sotch-pr35mac/character_converter/blob/master/LICENSE)
