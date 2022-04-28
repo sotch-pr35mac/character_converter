@@ -57,16 +57,16 @@ impl Converter {
     fn convert_script(raw: &str, mapping: &HashMap<String, String>) -> String {
         let mut converted_characters: String = String::new();
         let default_take = raw.chars().take(20).count();
-        let mut skip = 0;
+        let mut skip_bytes = 0;
         let mut take = default_take;
 
-        while skip < raw.chars().count() {
-            let substring: String = raw.chars().skip(skip).take(take).collect();
+        while skip_bytes < raw.len() {
+            let substring: String = raw[skip_bytes..].chars().take(take).collect();
             let mapped_char = mapping.get(&substring);
             match mapped_char {
                 Some(mapped_char) => {
                     converted_characters.push_str(mapped_char);
-                    skip += take;
+                    skip_bytes += substring.len();
                     take = default_take;
                 }
                 None => {
@@ -74,7 +74,7 @@ impl Converter {
                         take -= 1;
                     } else {
                         converted_characters.push_str(&substring);
-                        skip += 1;
+                        skip_bytes += substring.len();
                         take = default_take;
                     }
                 }
