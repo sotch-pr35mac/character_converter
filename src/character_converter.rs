@@ -61,20 +61,22 @@ impl Converter {
         let mut take = default_take;
 
         while skip_bytes < raw.len() {
-            let substring: String = raw[skip_bytes..].chars().take(take).collect();
-            let mapped_char = mapping.get(&substring);
-            match mapped_char {
+            let (index, last_char) = raw[skip_bytes..].char_indices().take(take).last().unwrap();
+            let end_index = index + last_char.len_utf8();
+            let substr = &raw[skip_bytes..][..end_index];
+
+            match mapping.get(substr) {
                 Some(mapped_char) => {
                     converted_characters.push_str(mapped_char);
-                    skip_bytes += substring.len();
+                    skip_bytes += substr.len();
                     take = default_take;
                 }
                 None => {
                     if take > 1 {
                         take -= 1;
                     } else {
-                        converted_characters.push_str(&substring);
-                        skip_bytes += substring.len();
+                        converted_characters.push_str(substr);
+                        skip_bytes += substr.len();
                         take = default_take;
                     }
                 }
