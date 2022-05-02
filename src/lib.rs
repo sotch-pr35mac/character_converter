@@ -106,7 +106,7 @@ fn convert_script<'a>(
                     }
                     None => {
                         if tailstr != mapped {
-                            let mut converted_characters = String::new();
+                            let mut converted_characters = String::with_capacity(raw.len());
                             converted_characters.push_str(&raw[..skip_bytes]);
                             converted_characters.push_str(mapped);
                             Some(converted_characters)
