@@ -31,6 +31,7 @@
 
 extern crate bincode;
 
+use std::borrow::Cow;
 use std::collections::HashMap;
 
 use bincode::deserialize_from;
@@ -80,8 +81,12 @@ pub fn is_simplified(raw: &str) -> bool {
     is_script(raw, &S2T, &T2S)
 }
 
-fn convert_script(raw: &str, mapping: &HashMap<String, String>, fst: &Fst<Vec<u8>>) -> String {
-    let mut converted_characters = String::new();
+fn convert_script<'a>(
+    raw: &'a str,
+    mapping: &HashMap<String, String>,
+    fst: &Fst<Vec<u8>>,
+) -> Cow<'a, str> {
+    let mut converted_characters: Option<String> = None;
     let mut skip_bytes = 0;
 
     while skip_bytes < raw.len() {
@@ -91,25 +96,37 @@ fn convert_script(raw: &str, mapping: &HashMap<String, String>, fst: &Fst<Vec<u8
             Some((_, length)) => {
                 let tailstr = &tailstr[..length];
                 let mapped = mapping.get(tailstr).unwrap();
-                converted_characters.push_str(mapped);
+                if let Some(converted_characters) = converted_characters.as_mut() {
+                    converted_characters.push_str(mapped);
+                } else if tailstr != mapped {
+                    converted_characters
+                        .get_or_insert_with(|| raw[..skip_bytes].to_string())
+                        .push_str(mapped);
+                }
                 skip_bytes += tailstr.len();
             }
             None => {
                 let first = tailstr.chars().next().unwrap();
-                converted_characters.push(first);
+                if let Some(converted_characters) = converted_characters.as_mut() {
+                    converted_characters.push(first);
+                }
+
                 skip_bytes += first.len_utf8();
             }
         }
     }
 
-    converted_characters
+    match converted_characters {
+        Some(s) => Cow::Owned(s),
+        None => Cow::Borrowed(raw),
+    }
 }
 
-pub fn traditional_to_simplified(raw: &str) -> String {
+pub fn traditional_to_simplified(raw: &str) -> Cow<str> {
     convert_script(raw, &T2S, &T2S_FST)
 }
 
-pub fn simplified_to_traditional(raw: &str) -> String {
+pub fn simplified_to_traditional(raw: &str) -> Cow<str> {
     convert_script(raw, &S2T, &S2T_FST)
 }
 
