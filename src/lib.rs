@@ -98,13 +98,23 @@ fn convert_script<'a>(
             Some((_, length)) => {
                 let tailstr = &tailstr[..length];
                 let mapped = mapping.get(tailstr).unwrap();
-                if let Some(converted_characters) = converted_characters.as_mut() {
-                    converted_characters.push_str(mapped);
-                } else if tailstr != mapped {
-                    converted_characters
-                        .get_or_insert_with(|| raw[..skip_bytes].to_string())
-                        .push_str(mapped);
-                }
+
+                converted_characters = match converted_characters.take() {
+                    Some(mut converted_characters) => {
+                        converted_characters.push_str(mapped);
+                        Some(converted_characters)
+                    }
+                    None => {
+                        if tailstr != mapped {
+                            let mut converted_characters = String::new();
+                            converted_characters.push_str(&raw[..skip_bytes]);
+                            converted_characters.push_str(mapped);
+                            Some(converted_characters)
+                        } else {
+                            None
+                        }
+                    }
+                };
                 skip_bytes += tailstr.len();
             }
             None => {
