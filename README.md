@@ -21,14 +21,14 @@ assert!(!is_simplified(traditional_text));
 
 // Convert script
 let result_three = traditional_to_simplified(traditional_text);
-assert!(result_three == simplified_text);
+assert_eq!(result_three, simplified_text);
 
 let result_four = simplified_to_traditional(simplified_text);
-assert!(result_four == traditional_text);
+assert_eq!(result_four, traditional_text);
 ```
 
 ### Benchmarks
-
+Run benchmarks using the nightly bench feature:
 ```
 cargo +nightly bench --features=bench
 ```

@@ -22,10 +22,10 @@
 //!
 //! // Convert script
 //! let result_three = traditional_to_simplified(traditional_text);
-//! assert!(result_three == simplified_text);
+//! assert_eq!(result_three, simplified_text);
 //!
 //! let result_four = simplified_to_traditional(simplified_text);
-//! assert!(result_four == traditional_text);
+//! assert_eq!(result_four, traditional_text);
 //! ```
 #![cfg_attr(feature = "bench", feature(test))]
 
@@ -81,7 +81,7 @@ pub fn is_simplified(raw: &str) -> bool {
 }
 
 fn convert_script(raw: &str, mapping: &HashMap<String, String>, fst: &Fst<Vec<u8>>) -> String {
-    let mut converted_characters: String = String::new();
+    let mut converted_characters = String::new();
     let mut skip_bytes = 0;
 
     while skip_bytes < raw.len() {
