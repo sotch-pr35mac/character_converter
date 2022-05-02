@@ -206,4 +206,46 @@ mod benches {
         let simplified = "人人生而自由﹐在尊严和权利上一律平等。他们赋有理性和良心﹐并应以兄弟关系的精神互相对待。";
         b.iter(|| simplified_to_traditional(simplified));
     }
+
+    #[bench]
+    #[cfg(feature = "bench")]
+    fn bench_traditional_to_traditional(b: &mut Bencher) {
+        let traditional = "人人生而自由﹐在尊嚴咊權利上一律平等。他們賦有理性咊良心﹐並應㕥兄弟關係的精神互相對待。";
+        b.iter(|| simplified_to_traditional(traditional));
+    }
+
+    #[bench]
+    #[cfg(feature = "bench")]
+    fn bench_simplified_to_simplified(b: &mut Bencher) {
+        let simplified = "人人生而自由﹐在尊严和权利上一律平等。他们赋有理性和良心﹐并应以兄弟关系的精神互相对待。";
+        b.iter(|| traditional_to_simplified(simplified));
+    }
+
+    #[bench]
+    #[cfg(feature = "bench")]
+    fn bench_traditional_is_traditional(b: &mut Bencher) {
+        let traditional = "人人生而自由﹐在尊嚴和權利上一律平等。他們賦有理性和良心﹐並應以兄弟關係的精神互相對待。";
+        b.iter(|| is_traditional(traditional));
+    }
+
+    #[bench]
+    #[cfg(feature = "bench")]
+    fn bench_simplified_is_simplified(b: &mut Bencher) {
+        let simplified = "人人生而自由﹐在尊严和权利上一律平等。他们赋有理性和良心﹐并应以兄弟关系的精神互相对待。";
+        b.iter(|| is_simplified(simplified));
+    }
+
+    #[bench]
+    #[cfg(feature = "bench")]
+    fn bench_traditional_is_simplified(b: &mut Bencher) {
+        let traditional = "人人生而自由﹐在尊嚴和權利上一律平等。他們賦有理性和良心﹐並應以兄弟關係的精神互相對待。";
+        b.iter(|| !is_simplified(traditional));
+    }
+
+    #[bench]
+    #[cfg(feature = "bench")]
+    fn bench_simplified_is_traditional(b: &mut Bencher) {
+        let simplified = "人人生而自由﹐在尊严和权利上一律平等。他们赋有理性和良心﹐并应以兄弟关系的精神互相对待。";
+        b.iter(|| !is_traditional(simplified));
+    }
 }
