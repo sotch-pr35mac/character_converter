@@ -65,8 +65,8 @@ fn is_script(
     let mut buffer = [0; 4];
     for character in raw.chars() {
         let c = character.encode_utf8(&mut buffer);
-        if mapping.get(c).is_none() {
-            if backup.get(c).is_some() {
+        if !mapping.contains_key(c) {
+            if backup.contains_key(c) {
                 return false;
             }
         }
