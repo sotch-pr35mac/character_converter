@@ -62,9 +62,11 @@ fn is_script(
     mapping: &HashMap<String, String>,
     backup: &HashMap<String, String>,
 ) -> bool {
+    let mut buffer = [0; 4];
     for character in raw.chars() {
-        if mapping.get(&character.to_string()).is_none() {
-            if backup.get(&character.to_string()).is_some() {
+        let c = character.encode_utf8(&mut buffer);
+        if mapping.get(c).is_none() {
+            if backup.get(c).is_some() {
                 return false;
             }
         }
