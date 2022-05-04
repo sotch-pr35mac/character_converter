@@ -44,18 +44,12 @@ static S2T: Lazy<HashMap<String, String>> =
 	Lazy::new(|| deserialize_from(&include_bytes!("../data/s2t.profile")[..]).unwrap());
 
 // create an fst containing all the keys
-static T2S_FST: Lazy<Fst<Vec<u8>>> = Lazy::new(|| {
-	let mut keys: Vec<_> = T2S.keys().collect();
-	keys.sort_unstable();
-	Fst::from_iter_set(keys).unwrap()
-});
+static T2S_FST: Lazy<Fst<&[u8]>> =
+	Lazy::new(|| Fst::new(&include_bytes!(concat!(env!("OUT_DIR"), "/t2s.fst"))[..]).unwrap());
 
 // create an fst containing all the keys
-static S2T_FST: Lazy<Fst<Vec<u8>>> = Lazy::new(|| {
-	let mut keys: Vec<_> = S2T.keys().collect();
-	keys.sort_unstable();
-	Fst::from_iter_set(keys).unwrap()
-});
+static S2T_FST: Lazy<Fst<&[u8]>> =
+	Lazy::new(|| Fst::new(&include_bytes!(concat!(env!("OUT_DIR"), "/s2t.fst"))[..]).unwrap());
 
 fn is_script(
 	raw: &str,
@@ -86,7 +80,7 @@ pub fn is_simplified(raw: &str) -> bool {
 fn convert_script<'a>(
 	raw: &'a str,
 	mapping: &HashMap<String, String>,
-	fst: &Fst<Vec<u8>>,
+	fst: &Fst<&[u8]>,
 ) -> Cow<'a, str> {
 	let mut converted_characters: Option<String> = None;
 	let mut skip_bytes = 0;
@@ -153,7 +147,7 @@ pub fn simplified_to_traditional(raw: &str) -> Cow<str> {
 ///
 /// This can be used to e.g. build tokenizing functions.
 #[inline]
-fn find_longest_prefix(fst: &Fst<Vec<u8>>, value: &[u8]) -> Option<(u64, usize)> {
+fn find_longest_prefix(fst: &Fst<&[u8]>, value: &[u8]) -> Option<(u64, usize)> {
 	let mut node = fst.root();
 	let mut out = Output::zero();
 	let mut last_match = None;

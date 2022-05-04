@@ -17,5 +17,9 @@ bincode = "1.2.1"
 once_cell = "1.5.2"
 fst = "0.4"
 
+[build-dependencies]
+bincode = "1.2.1"
+fst = "0.4"
+
 [features]
 bench = []
