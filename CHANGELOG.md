@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.1.0] - 2022-05-07
+### Added
+- Added tokenizer
+
 ## [2.0.0] - 2022-05-07
 ### Changed
 - Changed to FST implementation by merging PR #15
