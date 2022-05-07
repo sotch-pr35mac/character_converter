@@ -9,26 +9,28 @@ Turn Traditional Chinese script to Simplified Chinese script and vice-versa. Che
 ```rust
 extern crate character_converter;
 
-use character_converter::CharacterConverter;
+use character_converter::{is_traditional, is_simplified, traditional_to_simplified, simplified_to_traditional};
 
-let converter: CharacterConverter = CharacterConverter::new();
+let traditional_text = "歐洲";
+let simplified_text = "欧洲";
 
-let traditional_text = "復雜";
-let simplified_text = "复杂";
+// Check script
+assert!(is_traditional(traditional_text));
 
-// Check Script
-let result_one: bool = converter.is_traditional(traditional_text);
-println!("{}", result_one); // --> true
+assert!(!is_simplified(traditional_text));
 
-let result_two: bool = converter.is_simplified(traditional_text);
-println!("{}", result_two); // --> false
+// Convert script
+let result_three = traditional_to_simplified(traditional_text);
+assert_eq!(result_three, simplified_text);
 
-// Convert Script
-let result_three: String = converter.traditional_to_simplified(traditional_text);
-println!("{}", result_three == simplified_text); // --> true
+let result_four = simplified_to_traditional(simplified_text);
+assert_eq!(result_four, traditional_text);
+```
 
-let result_four: String = converter.simplified_to_traditional(simplified_text);
-println!("{}", result_four == traditional_text); // --> true
+### Benchmarks
+Run benchmarks using the nightly bench feature:
+```
+cargo +nightly bench --features=bench
 ```
 
 ### License
