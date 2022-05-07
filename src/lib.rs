@@ -26,6 +26,11 @@
 //!
 //! let result_four = simplified_to_traditional(simplified_text);
 //! assert_eq!(result_four, traditional_text);
+//!
+//! // Tokenize
+//! let string = "好好学习天天向上.";
+//! let tokens = vec!["好好", "学习", "天天", "向上"];
+//! assert_eq!(tokens, tokenize(string));
 //! ```
 #![cfg_attr(feature = "bench", feature(test))]
 
@@ -143,6 +148,29 @@ pub fn simplified_to_traditional(raw: &str) -> Cow<str> {
 	convert_script(raw, &S2T, &S2T_FST)
 }
 
+pub fn tokenize(raw: &str) -> Vec<&str> {
+	let fst = if is_traditional(raw) { &T2S_FST } else { &S2T_FST };
+	let mut tokens: Vec<&str> = Vec::with_capacity(raw.chars().count());
+	let mut skip_bytes = 0;
+
+	while skip_bytes < raw.len() {
+		let tailstr = &raw[skip_bytes..];
+
+		match find_longest_prefix(fst, tailstr.as_bytes()) {
+			Some((_, length)) => {
+				let token = &tailstr[..length];
+				tokens.push(token);
+				skip_bytes += token.len();
+			}
+			None => {
+				skip_bytes += tailstr.chars().next().unwrap().len_utf8();
+			}
+		}
+	}
+	tokens.shrink_to_fit();
+	tokens
+}
+
 /// Thanks to @llogiq for this function
 /// https://github.com/BurntSushi/fst/pull/104/files
 ///
@@ -214,6 +242,28 @@ mod tests {
 		let simplified = "人人生而自由﹐在尊严和权利上一律平等。他们赋有理性和良心﹐并应以兄弟关系的精神互相对待。";
 		assert_eq!(traditional, simplified_to_traditional(simplified));
 	}
+
+	#[test]
+	fn test_tokenize_simplified() {
+		let sentence = "人人生而自由﹐在尊严和权利上一律平等。他们赋有理性和良心﹐并应以兄弟关系的精神互相对待。";
+		let tokens = vec![
+			"人人", "生", "而", "自由", "在", "尊严", "和", "权利", "上", "一律", "平等", "他们",
+			"赋", "有理", "性", "和", "良心", "并", "应", "以", "兄弟", "关系", "的", "精神",
+			"互相", "对待",
+		];
+		assert_eq!(tokens, tokenize(sentence));
+	}
+
+	#[test]
+	fn test_tokenize_traditional() {
+		let sentence = "人人生而自由﹐在尊嚴咊權利上一律平等。他們賦有理性咊良心﹐並應㕥兄弟關係的精神互相對待。";
+		let tokens = vec![
+			"人人", "生", "而", "自由", "在", "尊嚴", "咊", "權利", "上", "一律", "平等", "他們",
+			"賦", "有理", "性", "咊", "良心", "並", "應", "㕥", "兄弟", "關係", "的", "精神",
+			"互相", "對待",
+		];
+		assert_eq!(tokens, tokenize(sentence));
+	}
 }
 
 #[cfg(all(feature = "bench", test))]
@@ -277,5 +327,12 @@ mod benches {
 	fn bench_simplified_is_traditional(b: &mut Bencher) {
 		let simplified = "人人生而自由﹐在尊严和权利上一律平等。他们赋有理性和良心﹐并应以兄弟关系的精神互相对待。";
 		b.iter(|| !is_traditional(simplified));
+	}
+
+	#[bench]
+	#[cfg(feature = "bench")]
+	fn bench_tokenize(b: &mut Bencher) {
+		let sentence = "人人生而自由﹐在尊严和权利上一律平等。他们赋有理性和良心﹐并应以兄弟关系的精神互相对待。";
+		b.iter(|| tokenize(sentence));
 	}
 }

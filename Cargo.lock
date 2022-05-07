@@ -20,7 +20,7 @@ checksum = "a7c3dd8985a7111efc5c80b44e23ecdd8c007de8ade3b96595387e812b957cf5"
 
 [[package]]
 name = "character_converter"
-version = "2.0.0"
+version = "2.1.0"
 dependencies = [
  "bincode",
  "fst",
