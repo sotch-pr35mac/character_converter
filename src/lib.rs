@@ -51,6 +51,13 @@ static T2S_FST: Lazy<Fst<&[u8]>> =
 static S2T_FST: Lazy<Fst<&[u8]>> =
 	Lazy::new(|| Fst::new(&include_bytes!(concat!(env!("OUT_DIR"), "/s2t.fst"))[..]).unwrap());
 
+pub fn init() {
+	Lazy::force(&T2S);
+	Lazy::force(&S2T);
+	Lazy::force(&T2S_FST);
+	Lazy::force(&S2T_FST);
+}
+
 fn is_script(
 	raw: &str,
 	mapping: &HashMap<String, String>,

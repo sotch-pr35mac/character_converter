@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.0] - 2022-05-07
+### Changed
+- Changed to FST implementation by merging PR #15
+- Optimizations by merging PR #15
+
 ## [1.0.0] - 2020-11-22
 ### Changed
 - Updated methods to accept `&str` type
