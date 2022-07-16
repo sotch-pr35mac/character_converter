@@ -1,5 +1,4 @@
 # character_converter
-##### v2.1.0
 ---
 
 ### About

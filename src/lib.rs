@@ -71,14 +71,12 @@ fn is_script(
 	let mut buffer = [0; 4];
 	for character in raw.chars() {
 		let c = character.encode_utf8(&mut buffer);
-		if !mapping.contains_key(c) {
-			if backup.contains_key(c) {
-				return false;
-			}
+		if !mapping.contains_key(c) && backup.contains_key(c) {
+			return false;
 		}
 	}
 
-	return true;
+	true
 }
 
 pub fn is_traditional(raw: &str) -> bool {
