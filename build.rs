@@ -31,7 +31,7 @@ fn main() {
 	// simplified to traditionnal fst path
 	let output = Path::new(&build_dir).join("s2t.fst");
 
-	build_fst(&input, &output);
+	build_fst(input, &output);
 
 	// traditionnal to simplified dictionary path
 	let input = Path::new("data/t2s.profile");
@@ -39,5 +39,5 @@ fn main() {
 	// traditionnal to simplified fst path
 	let output = Path::new(&build_dir).join("t2s.fst");
 
-	build_fst(&input, &output);
+	build_fst(input, &output);
 }
