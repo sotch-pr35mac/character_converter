@@ -1,6 +1,6 @@
 [package]
 name = "character_converter"
-version = "2.1.1"
+version = "2.1.2"
 authors = ["Preston Wang-Stosur-Bassett <p.wanstobas@gmail.com>"]
 description = "Turn Traditional Chinese script ot Simplified Chinese script and vice-versa and tokenize."
 repository = "https://github.com/sotch-pr35mac/character_converter"
@@ -8,7 +8,7 @@ readme = "README.md"
 keywords = ["chinese", "simplified", "traditional", "convert", "hanzi"]
 categories = ["text-processing", "localization", "internationalization", "value-formatting"]
 license = "MIT"
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
